@@ -21,7 +21,8 @@
 
 ### Locally
 - Copy all `.txt` files from the `/contacts` folder contained by the ZIP file to this project's `/data` folder
+- Set the `AC_API_URL` and `AC_API_KEY` environment variables to Active Campaign's admin user's credentials
 - Run `./bin/import_notes_and_emails.rb`
 
 ### In Active Campaign
-- Verify success
+- Verify success :balloon:
