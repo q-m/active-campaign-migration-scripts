@@ -1,0 +1,23 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    active_campaign (0.1.14)
+      httpi
+      multi_json
+    dotenv (2.1.1)
+    httpi (2.4.2)
+      rack
+      socksify
+    multi_json (1.12.2)
+    rack (2.0.3)
+    socksify (1.7.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  active_campaign
+  dotenv
+
+BUNDLED WITH
+   1.13.6
