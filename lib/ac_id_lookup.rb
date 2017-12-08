@@ -1,21 +1,32 @@
+require 'json'
+
 class AcIdLookup
   def initialize(client)
     @client = client
   end
 
-  def by_email(email)
-    map[email]
+  def by_highrise_id(id)
+    map[id.to_s]
   end
 
   private
 
   def map
     @map ||= begin
-      # TODO deal with pages (per page = 20)
-      response = @client.contact_list(ids: "all", full: "0", page: 1)
-      Hash[*response["results"].flat_map do |ac_contact|
-        [ac_contact["email"], ac_contact["id"]]
-      end].freeze
+      page, results = 1, []
+      while (response = @client.contact_list(ids: "all", full: "1", page: page)) && response["result_code"] != 0
+        response["results"].each do |ac_contact|
+          highrise_id, active_campaign_id = read_highrise_id(ac_contact), ac_contact["id"]
+          results += [highrise_id, active_campaign_id] if highrise_id
+        end
+        page += 1
+      end
+
+      Hash[*results].freeze
     end
+  end
+
+  def read_highrise_id(ac_contact)
+    ac_contact["fields"].values.find { |fld| fld["title"] == "Highrise ID" }&.fetch("val")&.to_s
   end
 end

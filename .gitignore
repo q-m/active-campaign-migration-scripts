@@ -1,2 +1,3 @@
-data/*.txt
+data/csv/*.csv
+data/yaml/*.txt
 .env

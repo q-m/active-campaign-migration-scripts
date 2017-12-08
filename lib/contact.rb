@@ -5,8 +5,8 @@ class Contact
     @data = data
   end
 
-  def email
-    @email ||= (read_email || generate_email)
+  def id
+    @id ||= read_id
   end
 
   # Includes emails
@@ -24,10 +24,6 @@ class Contact
     if contact_ary = @data.find { |obj| obj.has_key?("Contact") }&.[]("Contact")
       contact_ary.find { |ar| ar[0] == "Email_addresses" }&.dig(1, 0)
     end
-  end
-
-  def generate_email
-    "bounce+#{read_id}@qmintelligence.com"
   end
 
   def read_id
