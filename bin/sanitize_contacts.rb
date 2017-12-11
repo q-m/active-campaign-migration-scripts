@@ -107,6 +107,7 @@ CSV.open(File.join(__dir__, "..", "data", "csv", "contacts.out.csv"), "w") do |o
     "Email address - Other(s)",
     "Web address - Work",
     "Twitter account",
+    "Tags",
     "Created at",
     "Updated at",
     "Highrise ID"
@@ -135,6 +136,7 @@ CSV.open(File.join(__dir__, "..", "data", "csv", "contacts.out.csv"), "w") do |o
       other_emails.join(", "),
       row["Web address - Work"],
       row["Twitter account"],
+      row["Tags"],
       row["Created at"],
       row["Last Updated"],
       row.first[1] # row["Highrise ID"] returns nil, maybe hidden characters in header name?
