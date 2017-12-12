@@ -12,7 +12,7 @@ lookup = AcIdLookup.new(client)
 Dir["./data/yaml/*.txt"].each do |file|
   begin
     s = File.read(file)
-    s.gsub!(/(Body: \|6\+\r\n      )\s*/, '\\1\\2')
+    s.gsub!(/(Body: \|)6(\+\r\n      )\s*/, '\\1\\2\\3')
     test_contact_data = YAML.load(s)
     contact           = Contact.new(test_contact_data)
 
