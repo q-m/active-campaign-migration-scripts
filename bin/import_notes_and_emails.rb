@@ -16,14 +16,18 @@ Dir["./data/yaml/*.txt"].each do |file|
     test_contact_data = YAML.load(s)
     contact           = Contact.new(test_contact_data)
 
-    if contact_ac_id = lookup.by_highrise_id(contact.id)
-      contact.notes.each do |note|
-        client.contact_note_add(id: contact_ac_id, note: note.to_s)
-        sleep(0.5) # if we're going too fast we might loose the order
+    if contact.notes.any?
+      if contact_ac_id = lookup.by_highrise_id(contact.id)
+        contact.notes.each do |note|
+          client.contact_note_add(id: contact_ac_id, note: note.to_s)
+          sleep(0.5) # if we're going too fast we might loose the order
+        end
+        print "[ok]   Imported #{contact.notes.size} notes and emails for contact with ActiveCampaign ID #{contact_ac_id}\n"
+      else
+        print "[fail] Unable to find Active Campaign contact for Highrise ID #{contact.id}. Did you populate the Highrise ID field in ActiveCampaign?\n"
       end
-      print "[ok]   Imported #{contact.notes.size} notes and emails for contact with ActiveCampaign ID #{contact_ac_id}\n"
     else
-      print "[fail] Unable to find Active Campaign contact for Highrise ID #{contact.id}. Did you populate the Highrise ID field in ActiveCampaign?\n"
+      print "[ok]   No notes or emails for contact with Highrise ID #{contact.id}\n"
     end
   rescue Psych::SyntaxError => e
     print "[fail] Parse error in '#{file}': #{e}\n"

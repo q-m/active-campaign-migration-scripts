@@ -12,6 +12,7 @@
 - Make sure all contacts are deleted from Active Campaign
 
 ### In Active Campaign
+- Set environment variables
 - Import resulting CSV from within Active Campaign
     + Make sure to map create custom fields for all columns
     + Map the "Highrise ID" column to a custom field named "Highrise ID"!
@@ -24,8 +25,9 @@
 
 ### Locally
 - Copy all `.txt` files from the `/contacts` folder contained by the ZIP file to this project's `/data/yaml` folder
-- Set the `AC_API_URL` and `AC_API_KEY` environment variables to Active Campaign's admin user's credentials
+- Set the `AC_API_URL` and `AC_API_KEY` environment variables to Active Campaign's admin user's credentials. Note that the URL needs to be postfixed with `/admin/api.php`.
 - Run `./bin/import_notes_and_emails.rb`
 
 ### In Active Campaign
 - Verify success :balloon:
+

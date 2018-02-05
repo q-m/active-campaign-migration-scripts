@@ -86,6 +86,11 @@ def extract_emails(row)
   [ primary_email, *(work_emails + home_emails + other_emails) ]
 end
 
+def prepare_column(s)
+  # remove newlines, as ActiveCampaign has issues with it
+  s.to_s.gsub(/[\r\n]/, '; ')
+end
+
 CSV.open(File.join(__dir__, "..", "data", "csv", "contacts.out.csv"), "w") do |out|
   out << [
     "Company or Person",
@@ -140,6 +145,6 @@ CSV.open(File.join(__dir__, "..", "data", "csv", "contacts.out.csv"), "w") do |o
       row["Created at"],
       row["Last Updated"],
       row.first[1] # row["Highrise ID"] returns nil, maybe hidden characters in header name?
-    ]
+    ].map {|c| prepare_column(c) }
   end
 end
